@@ -9,6 +9,7 @@ import orderRouter from './routes/orderRoutes.js';
 import Razorpay from 'razorpay';
 import cors from 'cors';
 import Order from './models/orderModel.js';
+import uploadRouter from './routes/uploadRoutes.js';
 
 dotenv.config();
 
@@ -74,7 +75,7 @@ app.put('/api/orders/:id/pay', async (req, res) => {
     res.status(404).send({ message: 'Order Not Found' });
   }
 });
-
+app.use('/api/upload', uploadRouter);
 app.use('/api/seed', seedRouter);
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
