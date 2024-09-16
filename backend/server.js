@@ -75,6 +75,10 @@ app.put('/api/orders/:id/pay', async (req, res) => {
     res.status(404).send({ message: 'Order Not Found' });
   }
 });
+
+app.get('/api/keys/google', (req, res) => {
+  res.send({ key: process.env.GOOGLE_API_KEY || '' });
+});
 app.use('/api/upload', uploadRouter);
 app.use('/api/seed', seedRouter);
 app.use('/api/products', productRouter);
