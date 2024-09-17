@@ -37,6 +37,8 @@ import UserEditScreen from './screens/UserEditScreen';
 import MapScreen from './screens/MapScreen';
 import ForgetPasswordScreen from './screens/ForgetPasswordScreen';
 import ResetPasswordScreen from './screens/ResetPasswordScreen';
+import VendorRoute from './components/VendorRoute';
+import DeliveryRoute from './components/DeliveryRoute';
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -64,6 +66,16 @@ function App() {
     };
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    if (userInfo) {
+      console.log('User Info:', userInfo);
+    } else {
+      console.log('No user info available');
+    }
+  }, [userInfo]);
+  
+  
 
   return (
     <BrowserRouter>
@@ -108,9 +120,11 @@ function App() {
                       <LinkContainer to="/profile">
                         <NavDropdown.Item>User Profile</NavDropdown.Item>
                       </LinkContainer>
-                      <LinkContainer to="/orderhistory">
-                        <NavDropdown.Item>Order History</NavDropdown.Item>
-                      </LinkContainer>
+                      {!userInfo.isAdmin && !userInfo.isVendor && !userInfo.isDeliveryPersonnel && (
+      <LinkContainer to="/orderhistory">
+        <NavDropdown.Item>Order History</NavDropdown.Item>
+      </LinkContainer>
+    )}
                       <NavDropdown.Divider />
                       <Link
                         className="dropdown-item"
@@ -295,6 +309,49 @@ function App() {
                   </AdminRoute>
                 }
               ></Route>
+              {/* Vendor Routes */}
+              <Route
+                path="/vendor/dashboard"
+                element={
+                  <VendorRoute>
+                    <DashboardScreen />
+                  </VendorRoute>
+                }
+              />
+              <Route
+                path="/vendor/productlist"
+                element={
+                  <VendorRoute>
+                    <ProductListScreen />
+                  </VendorRoute>
+                }
+              />
+              <Route
+                path="/vendor/orderlist"
+                element={
+                  <VendorRoute>
+                    <OrderListScreen />
+                  </VendorRoute>
+                }
+              />
+
+              {/* Delivery Personnel Routes */}
+              <Route
+                path="/delivery/dashboard"
+                element={
+                  <DeliveryRoute>
+                    <DashboardScreen />
+                  </DeliveryRoute>
+                }
+              />
+              <Route
+                path="/delivery/orders"
+                element={
+                  <DeliveryRoute>
+                    <OrderListScreen />
+                  </DeliveryRoute>
+                }
+              />
               <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>

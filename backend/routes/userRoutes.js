@@ -174,6 +174,8 @@ userRouter.post(
           name: user.name,
           email: user.email,
           isAdmin: user.isAdmin,
+          isVendor: user.isVendor,
+          isDeliveryPersonnel: user.isDeliveryPersonnel, // Include these fields
           token: generateToken(user),
         });
         return;
@@ -183,37 +185,37 @@ userRouter.post(
   })
 );
 
+
 userRouter.post(
-    '/signup',
-    expressAsyncHandler(async (req, res) => {
-      const { name, email, password, role } = req.body;
-      
-      // Determine roles based on the selected role from the frontend
-      const isAdmin = role === 'admin';
-      const isVendor = role === 'vendor';
-      const isDeliveryPersonnel = role === 'delivery';
-  
-      const newUser = new User({
-        name,
-        email,
-        password: bcrypt.hashSync(password, 8),
-        isAdmin,
-        isVendor,
-        isDeliveryPersonnel,
-      });
-  
-      const user = await newUser.save();
-  
-      res.send({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        isAdmin: user.isAdmin,
-        isVendor: user.isVendor,
-        isDeliveryPersonnel: user.isDeliveryPersonnel,
-        token: generateToken(user),
-      });
-    })
-  );    
+  '/signup',
+  expressAsyncHandler(async (req, res) => {
+    const { name, email, password, role } = req.body;
+    
+    const isAdmin = role === 'admin';
+    const isVendor = role === 'vendor';
+    const isDeliveryPersonnel = role === 'delivery';
+
+    const newUser = new User({
+      name,
+      email,
+      password: bcrypt.hashSync(password, 8),
+      isAdmin,
+      isVendor,
+      isDeliveryPersonnel,
+    });
+
+    const user = await newUser.save();
+
+    res.send({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      isVendor: user.isVendor,
+      isDeliveryPersonnel: user.isDeliveryPersonnel,
+      token: generateToken(user),
+    });
+  })
+);
 
 export default userRouter;

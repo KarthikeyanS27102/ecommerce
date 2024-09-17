@@ -49,7 +49,16 @@ function reducer(state, action) {
       case 'CART_CLEAR':
       return { ...state, cart: { ...state.cart, cartItems: [] } };
       case 'USER_SIGNIN':
-        return { ...state, userInfo: action.payload };
+  return {
+    ...state,
+    userInfo: {
+      ...action.payload,
+      isAdmin: action.payload.isAdmin,
+      isVendor: action.payload.isVendor,
+      isDeliveryPersonnel: action.payload.isDeliveryPersonnel,
+    },
+  };
+
       case 'USER_SIGNOUT':
         return {
         ...state,
