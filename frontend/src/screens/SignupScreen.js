@@ -99,9 +99,7 @@ export default function SignupScreen() {
             required
           >
             <option value="customer">Customer</option>
-            <option value="vendor">Vendor</option>
             <option value="admin">Admin</option>
-            <option value="delivery">Delivery Personnel</option>
           </Form.Control>
         </Form.Group>
 
