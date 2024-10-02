@@ -1,14 +1,14 @@
-const jwt = require('jsonwebtoken');
-const mg = require('mailgun-js');
+import jwt from 'jsonwebtoken';
+import mg from 'mailgun-js';
 
-const baseUrl = () =>
+export const baseUrl = () =>
   process.env.BASE_URL
     ? process.env.BASE_URL
     : process.env.NODE_ENV !== 'production'
     ? 'http://localhost:3000'
     : 'https://yourdomain.com';
 
-const generateToken = (user) => {
+export const generateToken = (user) => {
   return jwt.sign(
     {
       _id: user._id,
@@ -23,7 +23,7 @@ const generateToken = (user) => {
   );
 };
 
-const isAuth = (req, res, next) => {
+export const isAuth = (req, res, next) => {
   const authorization = req.headers.authorization;
   if (authorization) {
     const token = authorization.slice(7, authorization.length); // Bearer XXXXXX
@@ -40,7 +40,7 @@ const isAuth = (req, res, next) => {
   }
 };
 
-const isAdmin = (req, res, next) => {
+export const isAdmin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next();
   } else {
@@ -48,13 +48,13 @@ const isAdmin = (req, res, next) => {
   }
 };
 
-const mailgun = () =>
+export const mailgun = () =>
   mg({
     apiKey: process.env.MAILGUN_API_KEY,
     domain: process.env.MAILGUN_DOMAIN,
   });
 
-const payOrderEmailTemplate = (order) => {
+export const payOrderEmailTemplate = (order) => {
   return `<h1>Thanks for shopping with us</h1>
   <p>
   Hi ${order.user.name},</p>
@@ -113,12 +113,3 @@ const payOrderEmailTemplate = (order) => {
   `;
 };
 
-// Export all functions as module exports
-module.exports = {
-  baseUrl,
-  generateToken,
-  isAuth,
-  isAdmin,
-  mailgun,
-  payOrderEmailTemplate,
-};

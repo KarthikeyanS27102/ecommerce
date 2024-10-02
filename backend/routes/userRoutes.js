@@ -1,9 +1,9 @@
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const expressAsyncHandler = require('express-async-handler');
-const User = require('../models/userModel.js');
-const { generateToken, isAdmin, isAuth, baseUrl, mailgun } = require('../utils.js');
-const jwt = require('jsonwebtoken');
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import expressAsyncHandler from 'express-async-handler';
+import User from '../models/userModel.js';
+import { generateToken, isAdmin, isAuth, baseUrl, mailgun } from '../utils.js';
+import jwt from 'jsonwebtoken';
 
 const userRouter = express.Router();
 
@@ -212,4 +212,4 @@ userRouter.post(
   })
 );
 
-module.exports = userRouter;
+export default userRouter;
