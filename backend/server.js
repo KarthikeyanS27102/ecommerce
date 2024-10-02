@@ -1,15 +1,15 @@
-// Import modules using ES module syntax
-import express from 'express';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import cors from 'cors';
-import Razorpay from 'razorpay';
-import seedRouter from './routes/seedRoutes.js';
-import productRouter from './routes/productRoutes.js';
-import userRouter from './routes/userRoutes.js';
-import orderRouter from './routes/orderRoutes.js';
-import uploadRouter from './routes/uploadRoutes.js';
-import Order from './models/orderModel.js';
+const express = require('express');
+const data = require('./data.js');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const seedRouter = require('./routes/seedRoutes.js');
+const productRouter = require('./routes/productRoutes.js');
+const userRouter = require('./routes/userRoutes.js');
+const orderRouter = require('./routes/orderRoutes.js');
+const Razorpay = require('razorpay');
+const cors = require('cors');
+const Order = require('./models/orderModel.js');
+const uploadRouter = require('./routes/uploadRoutes.js');
 
 // Configure dotenv for environment variables
 dotenv.config();
