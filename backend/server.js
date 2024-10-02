@@ -1,15 +1,15 @@
-import express from 'express';
-import data from './data.js';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import seedRouter from './routes/seedRoutes.js';
-import productRouter from './routes/productRoutes.js';
-import userRouter from './routes/userRoutes.js';
-import orderRouter from './routes/orderRoutes.js';
-import Razorpay from 'razorpay';
-import cors from 'cors';
-import Order from './models/orderModel.js';
-import uploadRouter from './routes/uploadRoutes.js';
+const express = require('express');
+const data = require('./data.js');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const seedRouter = require('./routes/seedRoutes.js');
+const productRouter = require('./routes/productRoutes.js');
+const userRouter = require('./routes/userRoutes.js');
+const orderRouter = require('./routes/orderRoutes.js');
+const Razorpay = require('razorpay');
+const cors = require('cors');
+const Order = require('./models/orderModel.js');
+const uploadRouter = require('./routes/uploadRoutes.js');
 
 dotenv.config();
 

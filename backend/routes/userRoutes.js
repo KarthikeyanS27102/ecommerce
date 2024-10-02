@@ -1,10 +1,9 @@
-import express from 'express';
-import bcrypt from 'bcryptjs';
-import expressAsyncHandler from 'express-async-handler';
-import User from '../models/userModel.js';
-import { generateToken, isAdmin, isAuth, baseUrl, mailgun } from '../utils.js';
-import jwt from 'jsonwebtoken';
-
+const express = require('express');
+const bcrypt = require('bcryptjs');
+const expressAsyncHandler = require('express-async-handler');
+const User = require('../models/userModel.js');
+const { generateToken, isAdmin, isAuth, baseUrl, mailgun } = require('../utils.js');
+const jwt = require('jsonwebtoken');
 
 const userRouter = express.Router();
 
@@ -33,7 +32,7 @@ userRouter.get(
 );
 
 userRouter.put(
-  "/profile",
+  '/profile',
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
@@ -53,7 +52,7 @@ userRouter.put(
         token: generateToken(updatedUser),
       });
     } else {
-      res.status(404).send({ message: "User not found" });
+      res.status(404).send({ message: 'User not found' });
     }
   })
 );
@@ -70,7 +69,6 @@ userRouter.post(
       user.resetToken = token;
       await user.save();
 
-      //reset link
       console.log(`${baseUrl()}/reset-password/${token}`);
 
       mailgun()
@@ -80,9 +78,9 @@ userRouter.post(
             from: 'Amazona <me@mg.yourdomain.com>',
             to: `${user.name} <${user.email}>`,
             subject: `Reset Password`,
-            html: ` 
-             <p>Please Click the following link to reset your password:</p> 
-             <a href="${baseUrl()}/reset-password/${token}"}>Reset Password</a>
+            html: `
+             <p>Please Click the following link to reset your password:</p>
+             <a href="${baseUrl()}/reset-password/${token}">Reset Password</a>
              `,
           },
           (error, body) => {
@@ -109,9 +107,7 @@ userRouter.post(
           if (req.body.password) {
             user.password = bcrypt.hashSync(req.body.password, 8);
             await user.save();
-            res.send({
-              message: 'Password reseted successfully',
-            });
+            res.send({ message: 'Password reset successfully' });
           }
         } else {
           res.status(404).send({ message: 'User not found' });
@@ -122,7 +118,7 @@ userRouter.post(
 );
 
 userRouter.put(
-  "/:id",
+  '/:id',
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
@@ -130,12 +126,11 @@ userRouter.put(
     if (user) {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
-      
-      // Update roles based on request body
+
       user.isAdmin = Boolean(req.body.isAdmin);
       user.isVendor = Boolean(req.body.isVendor);
       user.isDeliveryPersonnel = Boolean(req.body.isDeliveryPersonnel);
-      
+
       const updatedUser = await user.save();
       res.send({ message: 'User Updated', user: updatedUser });
     } else {
@@ -175,7 +170,7 @@ userRouter.post(
           email: user.email,
           isAdmin: user.isAdmin,
           isVendor: user.isVendor,
-          isDeliveryPersonnel: user.isDeliveryPersonnel, // Include these fields
+          isDeliveryPersonnel: user.isDeliveryPersonnel,
           token: generateToken(user),
         });
         return;
@@ -185,12 +180,11 @@ userRouter.post(
   })
 );
 
-
 userRouter.post(
   '/signup',
   expressAsyncHandler(async (req, res) => {
     const { name, email, password, role } = req.body;
-    
+
     const isAdmin = role === 'admin';
     const isVendor = role === 'vendor';
     const isDeliveryPersonnel = role === 'delivery';
@@ -218,4 +212,4 @@ userRouter.post(
   })
 );
 
-export default userRouter;
+module.exports = userRouter;
