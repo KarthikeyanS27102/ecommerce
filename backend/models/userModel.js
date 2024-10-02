@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
   {
@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     resetToken: { type: String },
     isAdmin: { type: Boolean, default: false, required: true },
-    isVendor: { type: Boolean, default: false, required: true  },
+    isVendor: { type: Boolean, default: false, required: true },
     isDeliveryPersonnel: { type: Boolean, default: false, required: true },
     role: { type: String, required: true, default: 'customer' }, // Add the role field
   },
@@ -17,4 +17,4 @@ const userSchema = new mongoose.Schema(
 );
 
 const User = mongoose.model('User', userSchema);
-export default User;
+module.exports = User;

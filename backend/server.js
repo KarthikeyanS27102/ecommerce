@@ -13,10 +13,8 @@ import uploadRouter from './routes/uploadRoutes.js';
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+// Use environment variables for MongoDB URI and credentials
+mongoose.connect(process.env.MONGODB_URI, {})
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.log(`Error connecting to MongoDB: ${err.message}`));
 
