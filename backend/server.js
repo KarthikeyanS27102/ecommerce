@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGODB_URI, {})
   .catch((err) => console.log(`Error connecting to MongoDB: ${err.message}`));
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: 'https://fluffy-pegasus-e6f398.netlify.app' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
