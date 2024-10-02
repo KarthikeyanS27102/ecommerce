@@ -15,9 +15,14 @@ import uploadRouter from './routes/uploadRoutes.js';
 dotenv.config();
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {})
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.log(`Error connecting to MongoDB: ${err.message}`));
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://karthik27102:dQfSwmlZ4P8gmCuE@test-db.auzyt.mongodb.net/?retryWrites=true&w=majority&appName=test-db', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 30000, // Increase timeout
+})
+.then(() => console.log('Connected to MongoDB'))
+.catch((err) => console.log(`Error connecting to MongoDB: ${err.message}`));
+
 
 const app = express();
 app.use(cors({
